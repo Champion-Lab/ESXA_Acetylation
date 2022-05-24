@@ -113,10 +113,3 @@ rpoA_areas_df <- data.frame(sample = attr(rpoA_areas, "names"),
 #source("September_replicate.R")
 #source("October_replicate.R")
 source("November_replicate.R")
-
-#same as above with lfq data
-#source("September_lfq_replicate.R")
-#source("October_lfq_replicate.R")
-#source("November_lfq_replicate.R")
-
-
