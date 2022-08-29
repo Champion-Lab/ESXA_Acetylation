@@ -20,15 +20,25 @@ Nov_cluster_acet$Comp_WT_rat <- Nov_cluster_acet$Comp / Nov_cluster_acet$WT
 Nov_cluster_acet <- subset(Nov_cluster_acet, select = -c(WT, Del, Comp))
 Nov_cluster_acet <- as.data.frame(scale(Nov_cluster_acet, center = F))
 
+#creates the clustered object
+#Nov_cluster_acet is the name of the dataframe with data, 3 is number of clusters
+# 25 is the number of starting positions (higher nstart takes longer but produces more
+# reliable results)
 Nov_kmeans_acet <- kmeans(Nov_cluster_acet, 3, nstart = 25)
+#print the clustered object
 Nov_kmeans_acet
 
+
+#add the clusters to the original dataframe, save as new object
 Nov_cluster_acet_4 <- cbind(Nov_cluster_acet_temp, cluster = Nov_kmeans_acet$cluster)
+
+#visualize the clusters (basically creates a PCA plot)
 clusterplot <- fviz_cluster(Nov_kmeans_acet, Nov_cluster_acet, ggtheme = theme_bw(), geom = "point",
                             ellipse = T, main = F) +
   theme_bw(base_size = 20) +
   scale_color_manual(values = c("darkgoldenrod1", "magenta", "blue")) +
   scale_fill_manual(values = c("darkgoldenrod1", "magenta", "blue"))
+#view the plot
 clusterplot
 
 #everything before the theme_bw line

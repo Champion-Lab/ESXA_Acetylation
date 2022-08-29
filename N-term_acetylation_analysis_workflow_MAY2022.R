@@ -23,7 +23,8 @@ library(ggplot2)
 library(tidyr)
 
 #set working directory:
-setwd("~/04_Champion_Lab/02_N-terminal_Acetylation/Data Analysis/2022_05_20")
+#setwd("~/04_Champion_Lab/02_N-terminal_Acetylation/Data Analysis/2022_05_20")
+setwd("~/04_Champion_Lab/02_N-terminal_Acetylation/Data Analysis/For Publication Github 2022_05_24/ESXA_Acetylation")
 
 # Data organization:
 #   -3 biological replicates, denoted by their month: Sep, Nov, Nov.
@@ -76,25 +77,25 @@ rpoA_Oct <- protein_Oct_df[grepl(".*rpoA.*", protein_Oct_df$Accession),]
 rpoA_Nov <- protein_Nov_df[grepl(".*rpoA.*", protein_Nov_df$Accession),]
 
 #save each rpoA area value in a list for easy access
-rpoA_areas <- list()
-rpoA_areas[["SepWT_1"]] <- rpoA_Sep$SepWT_1.Area[1]
-rpoA_areas[["SepWT_2"]] <- rpoA_Sep$SepWT_2.Area[1]
-rpoA_areas[["SepWT_3"]] <- rpoA_Sep$SepWT_3.Area[1]
-rpoA_areas[["SepDel_1"]] <- rpoA_Sep$SepDel_1.Area[1]
-rpoA_areas[["SepDel_2"]] <- rpoA_Sep$SepDel_2.Area[1]
-rpoA_areas[["SepDel_3"]] <- rpoA_Sep$SepDel_3.Area[1]
-rpoA_areas[["SepComp_1"]] <- rpoA_Sep$SepComp_1.Area[1]
-rpoA_areas[["SepComp_2"]] <- rpoA_Sep$SepComp_2.Area[1]
-rpoA_areas[["SepComp_3"]] <- rpoA_Sep$SepComp_3.Area[1]
-rpoA_areas[["OctWT_1"]] <- rpoA_Oct$OctWT_1.Area[1]
-rpoA_areas[["OctWT_2"]] <- rpoA_Oct$OctWT_2.Area[1]
-rpoA_areas[["OctWT_3"]] <- rpoA_Oct$OctWT_3.Area[1]
-rpoA_areas[["OctDel_1"]] <- rpoA_Oct$OctDel_1.Area[1]
-rpoA_areas[["OctDel_2"]] <- rpoA_Oct$OctDel_2.Area[1]
-rpoA_areas[["OctDel_3"]] <- rpoA_Oct$OctDel_3.Area[1]
-rpoA_areas[["OctComp_1"]] <- rpoA_Oct$OctComp_1.Area[1]
-rpoA_areas[["OctComp_2"]] <- rpoA_Oct$OctComp_2.Area[1]
-rpoA_areas[["OctComp_3"]] <- rpoA_Oct$OctComp_3.Area[1]
+# rpoA_areas <- list()
+# rpoA_areas[["SepWT_1"]] <- rpoA_Sep$SepWT_1.Area[1]
+# rpoA_areas[["SepWT_2"]] <- rpoA_Sep$SepWT_2.Area[1]
+# rpoA_areas[["SepWT_3"]] <- rpoA_Sep$SepWT_3.Area[1]
+# rpoA_areas[["SepDel_1"]] <- rpoA_Sep$SepDel_1.Area[1]
+# rpoA_areas[["SepDel_2"]] <- rpoA_Sep$SepDel_2.Area[1]
+# rpoA_areas[["SepDel_3"]] <- rpoA_Sep$SepDel_3.Area[1]
+# rpoA_areas[["SepComp_1"]] <- rpoA_Sep$SepComp_1.Area[1]
+# rpoA_areas[["SepComp_2"]] <- rpoA_Sep$SepComp_2.Area[1]
+# rpoA_areas[["SepComp_3"]] <- rpoA_Sep$SepComp_3.Area[1]
+# rpoA_areas[["OctWT_1"]] <- rpoA_Oct$OctWT_1.Area[1]
+# rpoA_areas[["OctWT_2"]] <- rpoA_Oct$OctWT_2.Area[1]
+# rpoA_areas[["OctWT_3"]] <- rpoA_Oct$OctWT_3.Area[1]
+# rpoA_areas[["OctDel_1"]] <- rpoA_Oct$OctDel_1.Area[1]
+# rpoA_areas[["OctDel_2"]] <- rpoA_Oct$OctDel_2.Area[1]
+# rpoA_areas[["OctDel_3"]] <- rpoA_Oct$OctDel_3.Area[1]
+# rpoA_areas[["OctComp_1"]] <- rpoA_Oct$OctComp_1.Area[1]
+# rpoA_areas[["OctComp_2"]] <- rpoA_Oct$OctComp_2.Area[1]
+# rpoA_areas[["OctComp_3"]] <- rpoA_Oct$OctComp_3.Area[1]
 rpoA_areas[["NovWT_1"]] <- rpoA_Nov$NovWT_1.Area[1]
 rpoA_areas[["NovWT_2"]] <- rpoA_Nov$NovWT_2.Area[1]
 rpoA_areas[["NovWT_3"]] <- rpoA_Nov$NovWT_3.Area[1]
