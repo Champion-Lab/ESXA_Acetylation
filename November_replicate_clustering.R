@@ -34,7 +34,7 @@ clusterplot
 #everything before the theme_bw line
 clusterplot_to_save <- clusterplot <- fviz_cluster(Nov_kmeans_acet, Nov_cluster_acet, ggtheme = theme_bw(), geom = "point",
                                                    ellipse = T, main = F)
-save(clusterplot_to_save, file = "exports_2022_05_23/clusterplot_ggplot_obj.rdata")
+#save(clusterplot_to_save, file = "exports_2022_05_23/clusterplot_ggplot_obj.rdata")
 #load("exports_2022_05_23/clusterplot_ggplot_obj.rdata")
 
 
@@ -53,7 +53,7 @@ plot <- ggplot(Nov_cluster_acet_4_long) +
   scale_color_manual(values = c("darkgoldenrod1", "magenta", "blue")) +
   theme_bw(base_size = 20) +
   labs(y = "Normalized Area", x = element_blank()) +
-  theme(panel.grid = element_blank())
+  theme(panel.grid = element_blank(), legend.position = "none")
 plot
 
 
@@ -97,3 +97,4 @@ plot3 <- ggplot(cluster3df) +
   labs(y = "Normalized Area", x = element_blank()) +
   theme(panel.grid = element_blank())
 plot3
+
