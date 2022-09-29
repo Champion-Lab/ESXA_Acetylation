@@ -1,7 +1,7 @@
-####Whole Proteome Analysis
-
-#prepare a whole proteome class for marinum and a dag logo
-#class of the 26 substrates
+#Whole Proteome Analysis
+#libraries
+library(dagLogo)
+#prepare a whole proteome class for marinum and a dag logo class of the 23 substrates
 WholeMMAR_proteome <- prepareProteome(fasta = 'C:\\Users\\colla\\Documents\\Research Summer 2022\\R scripts and Excel Files\\MMARproteome.fasta', 
                                       species = 'Mycobacterium marinum')
 #load in the List of Substrates
