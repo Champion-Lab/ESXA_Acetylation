@@ -1,4 +1,4 @@
-###########Making Nice Figure#########################
+###########Making Nice Figure############
 #Read in N-terminal Acetylome from the path on my device
 Acetylome<-read.csv('C:\\Users\\colla\\OneDrive\\Documents\\Research Summer 2022\\N-terminal Acetylome.csv')
 AcetylomeFasta<-AcetylomeFasta
@@ -14,7 +14,7 @@ proteome <- prepareProteome(fasta = 'C:\\Users\\colla\\OneDrive\\Documents\\Rese
 #prepare an object of dagPeptides Class
 seq <- formatSequence(seq = dat, proteome = proteome, upstreamOffset = 1,
                       downstreamOffset = 1)
-#attempt at acetylome model, unsure of if it worked
+#build acetylome background model
 AcetylomeModel<-buildBackgroundModel(
   dagPeptides=seq,
   background = "inputSet",
@@ -29,7 +29,7 @@ AcetylomeModel<-buildBackgroundModel(
 )
 
 
-######################Background scripts as described in paper, not sure what they mean yet
+###Background scripts as described in paper
 bg<-buildBackgroundModel(seq, proteome=proteome,
                          numSubsamples=10)
 #custom grouping scheme for base Logo
