@@ -6,12 +6,13 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 library(ggpubr)
+library(ggrepel)
 
 set.seed(1839)
 
 #set working directory:
 #setwd("~/04_Champion_Lab/02_N-terminal_Acetylation/Data Analysis/2022_05_20")
-setwd("~/04_Champion_Lab/02_N-terminal_Acetylation/Data Analysis/For Publication Github 2022_05_24/ESXA_Acetylation")
+setwd("~/04_Champion_Lab/02_N-terminal_Acetylation/MRA/github/ESXA_Acetylation/")
 
 #source functions
 source("functions/functions.R")
@@ -403,7 +404,7 @@ nov$cluster <- factor(nov$cluster, levels = c("2", "1"))
 nov$category2[nov$cluster == "2"] <- "EsxA Cluster"
 nov$category2[nov$cluster != "2"] <- "Other"
 
-
+nov$label[nov$protein == "MMAR_5450"] <- "EsxA"
 
 ggplot(nov, aes(x = condition, y = areaLog)) +
   geom_jitter((aes(color = cluster)),
@@ -420,6 +421,8 @@ ggplot(nov, aes(x = condition, y = areaLog)) +
   stat_compare_means(method = "t.test",
                      comparisons = list(c("WT", "Comp"), c("WT", "Del"), c("Del", "Comp")),
                      label = "p.signif",tip.length = 0.01,step.increase = 0.1) +
+  geom_text_repel(aes(label = label),nudge_y = 1,
+                  nudge_x = 1, position = position_jitter(seed = 1)) +
   coord_cartesian(ylim = c(1.2,6.2))
 
 ggsave("MRA/pairwise_ttest_analysis_of_EXSA_cluster.png")
@@ -451,4 +454,35 @@ summary <- nov %>% group_by(cluster, condition) %>%
   summarise(n())
 summary
 
+
+
+
+
+
+
+
+
+
+
+
+ggplot(nov, aes(x = condition, y = areaLog)) +
+  geom_point((aes(color = cluster)),
+             position = position_jitter(width = 0.3, seed = 1)) +
+  theme_bw(base_size = 12) +
+  geom_boxplot(aes(color = cluster, alpha = 0)) +
+  labs(y = "N-terminal Acetylated Peptide\n Median Normalized Area\n(log10 transformed)",
+       x = element_blank()) +
+  theme(legend.position = "none",
+        panel.grid = element_blank()) +
+  facet_wrap("cluster", labeller = labeller(cluster = labs)) +
+  # stat_compare_means(method = "anova") +
+  scale_x_discrete(labels = c("Wild Type", "\u0394emp1", "\u0394emp1/Complement"))+
+  stat_compare_means(method = "t.test",
+                     comparisons = list(c("WT", "Comp"), c("WT", "Del"), c("Del", "Comp")),
+                     label = "p.signif",tip.length = 0.01,step.increase = 0.1) +
+  geom_text_repel(aes(label = label),box.padding = 1.5,
+                  position = position_jitter(width = 0.3,seed = 1)) +
+  coord_cartesian(ylim = c(1.2,6.2))
+
+ggsave("MRA/pairwise_ttest_analysis_of_EXSA_cluster.png")
 
