@@ -476,7 +476,9 @@ ggplot(nov, aes(x = condition, y = areaLog)) +
         panel.grid = element_blank()) +
   facet_wrap("cluster", labeller = labeller(cluster = labs)) +
   # stat_compare_means(method = "anova") +
-  scale_x_discrete(labels = c("Wild Type", "\u0394emp1", "\u0394emp1/Complement"))+
+  scale_x_discrete(labels = c("WT",
+                              expression(paste("\u0394",italic("emp1"))),
+                              expression(paste("\u0394",italic("emp1"), "/comp"))))+
   stat_compare_means(method = "t.test",
                      comparisons = list(c("WT", "Comp"), c("WT", "Del"), c("Del", "Comp")),
                      label = "p.signif",tip.length = 0.01,step.increase = 0.1) +
@@ -485,4 +487,69 @@ ggplot(nov, aes(x = condition, y = areaLog)) +
   coord_cartesian(ylim = c(1.2,6.2))
 
 ggsave("MRA/pairwise_ttest_analysis_of_EXSA_cluster.png")
+
+
+
+
+
+
+ggplot(nov, aes(x = condition, y = areaLog)) +
+  geom_point((aes(color = cluster)),
+             position = position_jitter(width = 0.3, seed = 1)) +
+  theme_bw(base_size = 12) +
+  geom_boxplot(aes(color = cluster, alpha = 0)) +
+  labs(y = "N-terminal Acetylated Peptide\n Median Normalized Area\n(log10 transformed)",
+       x = element_blank()) +
+  theme(legend.position = "none",
+        panel.grid = element_blank()) +
+  facet_wrap("cluster", labeller = labeller(cluster = labs)) +
+  scale_x_discrete(labels = c("WT",
+                              expression(paste("\u0394",italic("emp1"))),
+                              expression(paste("\u0394",italic("emp1"), "/comp"))))+
+  stat_compare_means(method = "anova") +
+  stat_compare_means(method = "t.test",
+                     comparisons = list(c("WT", "Comp"), c("WT", "Del"), c("Del", "Comp")),
+                     label = "p.signif",tip.length = 0.01,step.increase = 0.1) +
+  geom_text_repel(aes(label = label),box.padding = 1.5,
+                  position = position_jitter(width = 0.3,seed = 1)) +
+  coord_cartesian(ylim = c(1.2,6.2))
+
+
+
+#tukey test following anova
+
+stat.test.esxAcluster <- aov(areaLog ~ condition, data = nov[nov$category2 == "EsxA Cluster",]) %>%
+  tukey_hsd()
+
+stat.test.othercluster <- aov(areaLog ~ condition, data = nov[nov$category2 == "Other",]) %>%
+  tukey_hsd()
+
+stat.test.esxAcluster$cluster <- 2
+stat.test.othercluster$cluster <- 1
+
+stat.test <- bind_rows(stat.test.esxAcluster, stat.test.othercluster)
+
+ggplot(nov, aes(x = condition, y = areaLog)) +
+  geom_point((aes(color = cluster)),
+             position = position_jitter(width = 0.3, seed = 1)) +
+  theme_bw(base_size = 12) +
+  geom_boxplot(aes(color = cluster, alpha = 0)) +
+  labs(y = "N-terminal Acetylated Peptide\n Median Normalized Area\n(log10 transformed)",
+       x = element_blank()) +
+  theme(legend.position = "none",
+        panel.grid = element_blank()) +
+  facet_wrap("cluster", labeller = labeller(cluster = labs)) +
+  scale_x_discrete(labels = c("WT",
+                              expression(paste("\u0394",italic("emp1"))),
+                              expression(paste("\u0394",italic("emp1"), "/comp"))))+
+  geom_text_repel(aes(label = label),box.padding = 1.8,
+                  position = position_jitter(width = 0.3,seed = 1)) +
+  coord_cartesian(ylim = c(1.2,6.2)) +
+  stat_pvalue_manual(
+    stat.test, label = "p.adj.signif", 
+    y.position = c(5.5, 5.75, 6),
+    tip.length = 0.005) +
+  ylab(expression(paste("N-terminal Acetylated Peptide Area (", log[10], " transformed)", sep = "")))
+
+ggsave("MRA/tukey_analysis_of_EXSA_cluster.png")
 
