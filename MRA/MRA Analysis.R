@@ -518,11 +518,17 @@ ggplot(nov, aes(x = condition, y = areaLog)) +
 
 #tukey test following anova
 
+
+
 stat.test.esxAcluster <- aov(areaLog ~ condition, data = nov[nov$category2 == "EsxA Cluster",]) %>%
   tukey_hsd()
 
 stat.test.othercluster <- aov(areaLog ~ condition, data = nov[nov$category2 == "Other",]) %>%
   tukey_hsd()
+
+
+summary(aov(areaLog ~ condition, data = nov[nov$category2 == "EsxA Cluster",]))
+summary(aov(areaLog ~ condition, data = nov[nov$category2 == "Other",]))
 
 stat.test.esxAcluster$cluster <- 2
 stat.test.othercluster$cluster <- 1
